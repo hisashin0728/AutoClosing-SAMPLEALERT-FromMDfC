@@ -122,7 +122,7 @@
 "azuresentinel_1": {
     "connectionId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().location, '/providers/Microsoft.Web/connections/azuresentinel')]",
     "connectionName": "azuresentinel",
-    "id": "/subscriptions/f6cc3615-eec5-4873-a79c-84ed72c481a2/providers/Microsoft.Web/locations/japaneast/managedApis/azuresentinel"
+    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/japaneast/managedApis/azuresentinel')]"
 }
 }
 }
