@@ -2,27 +2,27 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "metadata": {
-        "title": "Auto closing SAMPLE ALERT from Microsoft Defender for Cloud",
-        "description": "This playbook will be closing [SAMPLE ALERT] from Microsoft Defender for Cloud.",
+        "title": "",
+        "description": "",
         "prerequisites": "",
     "postDeployment": [],
     "prerequisitesDeployTemplateFile": "",
-    "lastUpdateTime": "2022-12-14T00:00:00.000Z",
+    "lastUpdateTime": "",
 "entities": [],
-"tags": [ "Ticketing" ],
+"tags": [],
 "support": {
 "tier": "community",
 "armtemplate": "Generated from https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Playbook-ARM-Template-Generator"
 },
 "author": {
-"name": "Hisashi Nakada"
+"name": ""
 }
 },
 "parameters": {
-    "PlaybookName": {
-        "defaultValue": "AutoClosing-SAMPLEALERT-FromMDfC",
-        "type": "string"
-    }
+"PlaybookName": {
+"defaultValue": "AutoClosingSAMPLEeventsFromMDfC",
+"type": "string"
+}
 },
 "variables": {
 "MicrosoftSentinelConnectionName": "[concat('MicrosoftSentinel-', parameters('PlaybookName'))]"
@@ -120,9 +120,9 @@
     }
 },
 "azuresentinel_1": {
-    "connectionId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().location, '/providers/Microsoft.Web/connections/azuresentinel')]",
+    "connectionId": "/subscriptions/f6cc3615-eec5-4873-a79c-84ed72c481a2/resourceGroups/rg-Sentinel-Playbook/providers/Microsoft.Web/connections/azuresentinel",
     "connectionName": "azuresentinel",
-    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/japaneast/managedApis/azuresentinel']"
+    "id": "/subscriptions/f6cc3615-eec5-4873-a79c-84ed72c481a2/providers/Microsoft.Web/locations/japaneast/managedApis/azuresentinel"
 }
 }
 }
@@ -133,6 +133,10 @@
 "location": "[resourceGroup().location]",
 "identity": {
 "type": "SystemAssigned"
+},
+"tags": {
+"hidden-SentinelTemplateName": "AutoClosingSAMPLEeventsFromMDfC",
+"hidden-SentinelTemplateVersion": "1.0"
 },
 "apiVersion": "2017-07-01",
 "dependsOn": [
