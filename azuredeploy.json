@@ -19,10 +19,10 @@
 }
 },
 "parameters": {
-"PlaybookName": {
-"defaultValue": "AutoClosing-SAMPLEALERT-FromMDfC",
-"type": "string"
-}
+    "PlaybookName": {
+        "defaultValue": "AutoClosing-SAMPLEALERT-FromMDfC",
+        "type": "string"
+    }
 },
 "variables": {
 "MicrosoftSentinelConnectionName": "[concat('MicrosoftSentinel-', parameters('PlaybookName'))]"
@@ -118,6 +118,11 @@
             "type": "ManagedServiceIdentity"
         }
     }
+},
+"azuresentinel_1": {
+    "connectionId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().location, '/providers/Microsoft.Web/connections/azuresentinel')]",
+    "connectionName": "azuresentinel",
+    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/japaneast/managedApis/azuresentinel']"
 }
 }
 }
