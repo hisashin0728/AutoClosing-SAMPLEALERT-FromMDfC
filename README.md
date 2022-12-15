@@ -1,9 +1,9 @@
 [English is here](https://github.com/hisashin0728/AutoClosing-SAMPLEALERT-FromMDfC/blob/main/Readme_en.md)
 
-# AutoClosing-SAMPLEALERT-FromMDfC
+# 本テンプレートの目的
 
-Microsoft Sentinel ではオートメーション機能を用いて、Logic Apps を通じて様々な自動化操作を行う機能を提供しています。
-本レポジトリは、Microsoft Sentinel のインシデント運用で用いられるインシデント操作を体験できるテンプレートを演習用として公開しています。
+- Microsoft Sentinel ではオートメーション機能を用いて、Logic Apps を通じて様々な自動化操作を行う機能を提供しています。 
+- Microsoft Sentinel のインシデント運用で用いられるインシデント操作を体験できるテンプレートを演習用として公開しました。
 
 # 画面イメージ
 本テンプレートを導入・設定することにより、Microsoft Defender for Cloud が発砲するサンプルイベント検知時に、インシデントを自動操作することを体験することが出来ます。
