@@ -8,6 +8,7 @@
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhisashin0728%2FAutoClosing-SAMPLEALERT-FromMDfC%2Fmain%2Fazuredeploy.json)
 
+
 # 画面イメージ
 Microsoft Defender for Cloud が発砲するサンプルイベント検知時に、Microsoft Sentinel 側でインシデントを自動操作することを体験することが出来ます。
 ![image](https://user-images.githubusercontent.com/55295601/207807787-7d4db6c1-085a-4a57-95b2-98dc391f2ecf.png)
@@ -22,9 +23,11 @@ Microsoft Defender for Cloud が発砲するサンプルイベント検知時に
 - インシデントを自動クローズさせる（理由は ``Undetermined``、コメントは "サンプルアラートのためクローズ" を追加）
 - タグを付与 ``SAMPLE``
 
+
 # 導入されるテンプレートのイメージ
 本テンプレートを導入すると、以下ロジックアプリが作成されます。ワークフローをご確認下さい。
 <img width="444" alt="image" src="https://user-images.githubusercontent.com/55295601/207754125-9254f119-5809-49de-a866-ce5356e53f25.png">
+
 
 # Azure への展開方法
 ## 1. テンプレートを導入する
@@ -32,6 +35,7 @@ Microsoft Defender for Cloud が発砲するサンプルイベント検知時に
 後のクリーンナップのため、専用のリソースグループを作成することをお勧めします。
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhisashin0728%2FAutoClosing-SAMPLEALERT-FromMDfC%2Fmain%2Fazuredeploy.json)
+
 
 ## 2. **Microsoft Sentinel レスポンダー** ロールを、ロジックアプリのマネージドID に付与する
 本テンプレートでは、Microsoft Sentinel との API 接続にマネージド ID を用いています。
@@ -41,9 +45,24 @@ Microsoft Sentinel と接続するためには ``Microsoft.SecurityInsights/inci
 以下がイメージになります。
 <img width="964" alt="image" src="https://user-images.githubusercontent.com/55295601/207773171-d6f493cc-0c16-41a3-8b8f-ad9664c00223.png">
 
+
 ## 3. Microsoft Sentinel でオートメーション機能を設定し、ロジックアプリが起動できるようにする
 Microsoft Sentinel から、「オートメーション」機能より、ロジックアプリを起動するためのオートメーションルールを作成します。
 <img width="1118" alt="image" src="https://user-images.githubusercontent.com/55295601/207773600-b9281b7f-2163-45b8-bdd0-560672f66e9e.png">
+
+## 4. テストする
+Microsoft Defender for Cloud (MDfC) と Microsoft Sentinel をコネクタで接続します。
+接続した後、MDfC 側から「サンプルアラートの生成」を行い、Sentinel にインシデント発砲を試みて下さい。
+<img width="960" alt="image" src="https://user-images.githubusercontent.com/55295601/207814200-1b7f4787-67e0-4eae-ade4-6d43cfed37cc.png">
+
+Sentinel側のインシデントを確認してみます。
+
+- MDfC 側からのアラートは見つかりましたか？
+  - Sentinel のインシデント状態に ``終了`` も入れてチェックしてみましょう
+- インシデントの重要度はどうなっていますか？
+  - MDfC 側の重要度は High / Medium / Low 様々なものが出ています。Sentinel のインシデントはどうでしょうか？
+- インシデントのコメントを確認してみましょう    
+
 
 # 免責事項
 
