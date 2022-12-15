@@ -6,8 +6,10 @@
 - Microsoft Sentinel のインシデント運用で用いられる、インシデントの自動操作を体験する演習用として公開しました。
 - テンプレートを導入することで、ユーザー側で定義した条件に対するインシデントの操作（自動クローズ、タグ付け、重要度変更など）を体験できます。
 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhisashin0728%2FAutoClosing-SAMPLEALERT-FromMDfC%2Fmain%2Fazuredeploy.json)
+
 # 画面イメージ
-本テンプレートを導入・設定することにより、Microsoft Defender for Cloud が発砲するサンプルイベント検知時に、インシデントを自動操作することを体験することが出来ます。
+Microsoft Defender for Cloud が発砲するサンプルイベント検知時に、Microsoft Sentinel 側でインシデントを自動操作することを体験することが出来ます。
 ![image](https://user-images.githubusercontent.com/55295601/207807787-7d4db6c1-085a-4a57-95b2-98dc391f2ecf.png)
 
 条件は以下で設定しています。
