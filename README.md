@@ -23,7 +23,7 @@ Microsoft Defender for Cloud が発砲するサンプルイベント検知時に
 - タグを付与 ``SAMPLE``
 
 # 導入されるテンプレートのイメージ
-本テンプレートを導入すると、以下ロジックアプリが作成されますので、ワークフローをご確認下さい。
+本テンプレートを導入すると、以下ロジックアプリが作成されます。ワークフローをご確認下さい。
 <img width="444" alt="image" src="https://user-images.githubusercontent.com/55295601/207754125-9254f119-5809-49de-a866-ce5356e53f25.png">
 
 # Azure への展開方法
