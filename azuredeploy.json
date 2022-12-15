@@ -5,158 +5,149 @@
         "title": "",
         "description": "",
         "prerequisites": "",
-    "postDeployment": [],
-    "prerequisitesDeployTemplateFile": "",
-    "lastUpdateTime": "",
-"entities": [],
-"tags": [],
-"support": {
-"tier": "community",
-"armtemplate": "Generated from https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Playbook-ARM-Template-Generator"
-},
-"author": {
-"name": ""
-}
-},
-"parameters": {
-"PlaybookName": {
-"defaultValue": "AutoClosingSAMPLEeventsFromMDfC",
-"type": "string"
-}
-},
-"variables": {
-"MicrosoftSentinelConnectionName": "[concat('MicrosoftSentinel-', parameters('PlaybookName'))]"
-},
-"resources": [
-{
-"properties": {
-    "provisioningState": "Succeeded",
-    "state": "Enabled",
-    "definition": {
-        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-        "contentVersion": "1.0.0.0",
-        "parameters": {
-            "$connections": {
-            "defaultValue": {},
-            "type": "Object"
+        "postDeployment": [],
+        "prerequisitesDeployTemplateFile": "",
+        "lastUpdateTime": "",
+        "entities": [],
+        "tags": [],
+        "author": {
+            "name": "Hisashi Nakada"
         }
     },
-    "triggers": {
-        "Microsoft_Sentinel_incident": {
-            "type": "ApiConnectionWebhook",
-            "inputs": {
-                "body": {
-                    "callback_url": "@{listCallbackUrl()}"
-                },
-                "host": {
-                    "connection": {
-                        "name": "@parameters('$connections')['azuresentinel']['connectionId']"
-                    }
-                },
-                "path": "/incident-creation"
-            }
+    "parameters": {
+        "PlaybookName": {
+            "defaultValue": "AutoClosingSAMPLEeventsFromMDfC",
+            "type": "string"
         }
     },
-    "actions": {
-        "インシデント名にSAMPLEが含まれていたら": {
-            "actions": {
-                "重要度をLowにして、タグをつけて自動クローズさせる": {
-                "runAfter": {},
-                "type": "ApiConnection",
-                "inputs": {
-                    "body": {
-                        "classification": {
-                            "ClassificationAndReason": "Undetermined",
-                            "ClassificationReasonText": "サンプルアラートのため、自動クローズ"
-                        },
-                        "incidentArmId": "@triggerBody()?['object']?['id']",
-                        "severity": "Informational",
-                        "status": "Closed",
-                        "tagsToAdd": {
-                            "TagsToAdd": [
-                                {
-                                    "Tag": "SAMPLE"
+    "variables": {
+        "MicrosoftSentinelConnectionName": "[concat('MicrosoftSentinel-', parameters('PlaybookName'))]"
+    },
+    "resources": [
+        {
+            "properties": {
+                "provisioningState": "Succeeded",
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Microsoft_Sentinel_incident": {
+                            "type": "ApiConnectionWebhook",
+                            "inputs": {
+                                "body": {
+                                    "callback_url": "@{listCallbackUrl()}"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                    }
+                                },
+                                "path": "/incident-creation"
+                            }
+                        }
+                    },
+                    "actions": {
+                        "インシデント名にSAMPLEが含まれていたら": {
+                            "actions": {
+                                "重要度をLowにして、タグをつけて自動クローズさせる": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "classification": {
+                                                "ClassificationAndReason": "Undetermined",
+                                                "ClassificationReasonText": "サンプルアラートのため、自動クローズ"
+                                            },
+                                            "incidentArmId": "@triggerBody()?['object']?['id']",
+                                            "severity": "Informational",
+                                            "status": "Closed",
+                                            "tagsToAdd": {
+                                                "TagsToAdd": [
+                                                    {
+                                                        "Tag": "SAMPLE"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                            }
+                                        },
+                                        "method": "put",
+                                        "path": "/Incidents"
+                                    }
                                 }
-                            ]
+                            },
+                            "runAfter": {},
+                            "expression": {
+                                "and": [
+                                    {
+                                        "contains": [
+                                            "@triggerBody()?['object']?['properties']?['title']",
+                                            "SAMPLE"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "If"
                         }
                     },
-                    "host": {
-                        "connection": {
-                            "name": "@parameters('$connections')['azuresentinel_1']['connectionId']"
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azuresentinel": {
+                                "connectionId": "[resourceId('Microsoft.Web/connections', variables('MicrosoftSentinelConnectionName'))]",
+                                "connectionName": "[variables('MicrosoftSentinelConnectionName')]",
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/Azuresentinel')]",
+                                "connectionProperties": {
+                                    "authentication": {
+                                        "type": "ManagedServiceIdentity"
+                                    }
+                                }
+                            }
                         }
-                    },
-                    "method": "put",
-                    "path": "/Incidents"
+                    }
+                }
+            },
+            "name": "[parameters('PlaybookName')]",
+            "type": "Microsoft.Logic/workflows",
+            "location": "[resourceGroup().location]",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "tags": {
+                "hidden-SentinelTemplateName": "AutoClosingSAMPLEeventsFromMDfC",
+                "hidden-SentinelTemplateVersion": "1.0"
+            },
+            "apiVersion": "2017-07-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/connections', variables('MicrosoftSentinelConnectionName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[variables('MicrosoftSentinelConnectionName')]",
+            "location": "[resourceGroup().location]",
+            "kind": "V1",
+            "properties": {
+                "displayName": "[variables('MicrosoftSentinelConnectionName')]",
+                "customParameterValues": {},
+                "parameterValueType": "Alternative",
+                "api": {
+                    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/Azuresentinel')]"
                 }
             }
-        },
-    "runAfter": {},
-    "expression": {
-        "and": [
-            {
-                "contains": [
-                    "@triggerBody()?['object']?['properties']?['title']",
-                    "SAMPLE"
-                ]
-            }
-        ]
-    },
-    "type": "If"
-}
-},
-"outputs": {}
-},
-"parameters": {
-"$connections": {
-"value": {
-"azuresentinel": {
-    "connectionId": "[resourceId('Microsoft.Web/connections', variables('MicrosoftSentinelConnectionName'))]",
-    "connectionName": "[variables('MicrosoftSentinelConnectionName')]",
-    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/Azuresentinel')]",
-    "connectionProperties": {
-        "authentication": {
-            "type": "ManagedServiceIdentity"
         }
-    }
-},
-"azuresentinel_1": {
-    "connectionId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().location, '/providers/Microsoft.Web/connections/azuresentinel')]",
-    "connectionName": "azuresentinel",
-    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/japaneast/managedApis/azuresentinel')]"
-}
-}
-}
-}
-},
-"name": "[parameters('PlaybookName')]",
-"type": "Microsoft.Logic/workflows",
-"location": "[resourceGroup().location]",
-"identity": {
-"type": "SystemAssigned"
-},
-"tags": {
-"hidden-SentinelTemplateName": "AutoClosingSAMPLEeventsFromMDfC",
-"hidden-SentinelTemplateVersion": "1.0"
-},
-"apiVersion": "2017-07-01",
-"dependsOn": [
-"[resourceId('Microsoft.Web/connections', variables('MicrosoftSentinelConnectionName'))]"
-]
-},
-{
-"type": "Microsoft.Web/connections",
-"apiVersion": "2016-06-01",
-"name": "[variables('MicrosoftSentinelConnectionName')]",
-"location": "[resourceGroup().location]",
-"kind": "V1",
-"properties": {
-"displayName": "[variables('MicrosoftSentinelConnectionName')]",
-"customParameterValues": {},
-"parameterValueType": "Alternative",
-"api": {
-"id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/Azuresentinel')]"
-}
-}
-}
-]
+    ]
 }
