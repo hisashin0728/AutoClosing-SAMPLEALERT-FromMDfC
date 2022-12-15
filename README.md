@@ -1,6 +1,4 @@
 # AutoClosing-SAMPLEALERT-FromMDfC
-AutoClosing-SAMPLEALERT-FromMDfC
-
 This automation (Logics Apps) provides to close SAMPLE ALERTS from Microsoft Defender for Cloud.
 Playbook will act the following sequences:
 
