@@ -21,7 +21,8 @@
         }
     },
     "variables": {
-        "MicrosoftSentinelConnectionName": "[concat('MicrosoftSentinel-', parameters('PlaybookName'))]"
+        "MicrosoftSentinelConnectionName": "[concat('MicrosoftSentinel-', parameters('PlaybookName'))]",
+        "SentinelResponderRoleID": "3e150937-b8fe-4cfb-8069-0eaf05ecd056"
     },
     "resources": [
         {
@@ -146,6 +147,36 @@
                 "parameterValueType": "Alternative",
                 "api": {
                     "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/Azuresentinel')]"
+                }
+            }
+        },
+        {
+            "apiVersion": "2019-05-01",
+            "name": "RoleDeploymentResource",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Logic/workflows/', parameters('PlaybookName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Logic/workflows/providers/roleAssignments",
+                            "apiVersion": "2022-04-01",
+                            "name": "[concat(parameters('PlaybookName'), '/Microsoft.Authorization/',  guid(concat(resourceGroup().id, '/', variables('SentinelResponderRoleID'))))]",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('SentinelResponderRoleID'))]",
+                                "principalId": "[reference(concat('Microsoft.Logic/workflows/', parameters('PlaybookName')), '2017-07-01', 'Full').identity.principalId]",
+                                "principalType": "ServicePrincipal"
+                            }
+                        }
+                    ]
                 }
             }
         }
