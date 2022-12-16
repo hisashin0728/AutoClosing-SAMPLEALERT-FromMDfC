@@ -37,20 +37,11 @@ Microsoft Defender for Cloud が発砲するサンプルイベント検知時に
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fhisashin0728%2FAutoClosing-SAMPLEALERT-FromMDfC%2Fmain%2Fazuredeploy.json)
 
 
-## 2. **Microsoft Sentinel レスポンダー** ロールを、ロジックアプリのマネージドID に付与する
-本テンプレートでは、Microsoft Sentinel との API 接続にマネージド ID を用いています。
-Microsoft Sentinel と接続するためには ``Microsoft.SecurityInsights/incidents/read`` 権限が必要になります。
-演習では、Microsoft Sentinel レスポンダーロールを付与して、接続のための権限を手動でアサインして下さい。
-![image](https://user-images.githubusercontent.com/55295601/207772809-3f784ed0-7780-4099-ab6b-c28a3c4752dc.png)
-以下がイメージになります。
-<img width="964" alt="image" src="https://user-images.githubusercontent.com/55295601/207773171-d6f493cc-0c16-41a3-8b8f-ad9664c00223.png">
-
-
-## 3. Microsoft Sentinel でオートメーション機能を設定し、ロジックアプリが起動できるようにする
+## 2. Microsoft Sentinel でオートメーション機能を設定し、ロジックアプリが起動できるようにする
 Microsoft Sentinel から、「オートメーション」機能より、ロジックアプリを起動するためのオートメーションルールを作成します。
 <img width="1118" alt="image" src="https://user-images.githubusercontent.com/55295601/207773600-b9281b7f-2163-45b8-bdd0-560672f66e9e.png">
 
-## 4. テストする
+## 3. テストする
 Microsoft Defender for Cloud (MDfC) と Microsoft Sentinel をコネクタで接続します。
 接続した後、MDfC 側から「サンプルアラートの生成」を行い、Sentinel にインシデント発砲を試みて下さい。
 <img width="960" alt="image" src="https://user-images.githubusercontent.com/55295601/207814200-1b7f4787-67e0-4eae-ade4-6d43cfed37cc.png">
