@@ -45,6 +45,15 @@ Microsoft Sentinel と接続するためには ``Microsoft.SecurityInsights/inci
 Microsoft Sentinel から、「オートメーション」機能より、ロジックアプリを起動するためのオートメーションルールを作成します。
 <img width="1118" alt="image" src="https://user-images.githubusercontent.com/55295601/207773600-b9281b7f-2163-45b8-bdd0-560672f66e9e.png">
 
+Sentinel側のインシデントを確認してみます。
+
+- MDfC 側からのアラートは見つかりましたか？
+  - Sentinel のインシデント状態に ``終了`` も入れてチェックしてみましょう
+- インシデントの重要度はどうなっていますか？
+  - MDfC 側の重要度は High / Medium / Low 様々なものが出ています。Sentinel のインシデントはどうでしょうか？
+- インシデントのコメントは有りましたか？
+- インシデントにタグが付与されていますか？
+
 # 免責事項
 
 - 本テンプレートは Microsoft Sentinel オートメーションを体験するための演習用として作成されたものです。
